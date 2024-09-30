@@ -2,10 +2,14 @@ package com.oriol.endevinanumero;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,9 +53,21 @@ public class MainActivity extends AppCompatActivity {
                         int numIntent = Integer.parseInt(numStr);
                         if (numIntent == num) {
                             text = "Has encertat el numero";
+                            final EditText input = new EditText(MainActivity.this);
                             AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
                             ad.setMessage(text)
-                            .setTitle(text);
+                            .setTitle(text).setView(input)
+                                    .setPositiveButton("Add surname", new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }})
+
+                            ;
+
+
+
                             AlertDialog dialog = ad.create();
                             dialog.show();
                         } else if (numIntent > num) {
