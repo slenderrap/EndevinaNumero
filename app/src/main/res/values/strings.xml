@@ -2,4 +2,5 @@
     <string name="app_name">EndevinaNumero</string>
     <string name="introdueix_un_numero">Introdueix un numero:</string>
     <string name="indica_un_numero">Indica un numero</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>

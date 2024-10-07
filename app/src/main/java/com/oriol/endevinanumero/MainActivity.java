@@ -23,7 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
+    private int intents=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,22 +40,22 @@ public class MainActivity extends AppCompatActivity {
         boolean endevinat=false;
 
             Button button = findViewById(R.id.numAleatori);
-            int numIntent;
+            int numInt;
 
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
+                        intents++;
                         int duration = Toast.LENGTH_SHORT;
 
                         CharSequence text = "";
                         EditText et = findViewById(R.id.textInputEditText);
                         String numStr = et.getText().toString();
-                        int numIntent = Integer.parseInt(numStr);
-                        if (numIntent == num) {
+                        int numInt = Integer.parseInt(numStr);
+                        if (numInt == num) {
                             text = "Has encertat el numero";
                             final EditText input = new EditText(MainActivity.this);
                             AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
-                            ad.setMessage(text)
+                            ad.setMessage(text+" en "+intents+" intents.")
                             .setTitle(text).setView(input)
                                     .setPositiveButton("Add surname", new DialogInterface.OnClickListener(){
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                             AlertDialog dialog = ad.create();
                             dialog.show();
-                        } else if (numIntent > num) {
+                        } else if (numInt > num) {
                              text = "El numero es massa gran";
 
                         } else {
