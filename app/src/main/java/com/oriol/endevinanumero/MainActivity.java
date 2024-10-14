@@ -3,9 +3,11 @@ package com.oriol.endevinanumero;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        int num = (int)(Math.random()*100);
-        boolean endevinat=false;
+        final int[] num = {(int) (Math.random() * 100)};
+        final boolean[] endevinat = {false};
 
             Button button = findViewById(R.id.numAleatori);
             int numInt;
@@ -51,26 +53,43 @@ public class MainActivity extends AppCompatActivity {
                         EditText et = findViewById(R.id.textInputEditText);
                         String numStr = et.getText().toString();
                         int numInt = Integer.parseInt(numStr);
-                        if (numInt == num) {
+                        if (numInt == num[0]) {
+                            et.setText("");
+
+                            endevinat[0] = false;
+                            num[0] = (int)(Math.random()*100);
                             text = "Has encertat el numero";
                             final EditText input = new EditText(MainActivity.this);
                             AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
                             ad.setMessage(text+" en "+intents+" intents.")
                             .setTitle(text).setView(input)
+                                    .setNegativeButton("Return", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    })
                                     .setPositiveButton("Add surname", new DialogInterface.OnClickListener(){
 
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    Editable nom = input.getText();
+                                    if (nom.equals("")){
+                                        Toast.makeText(MainActivity.this,"Has d'introudir el teu nom",duration).show();
 
+                                        Log.i("Error","NO NOMBRE"+nom);
+                                    }else {
+                                        Intent intent = new Intent(MainActivity.this,MainActivity2.class);
+                                        intent.putExtra(String.valueOf(nom), new String[]{String.valueOf(intents)});
+                                        startActivity(intent);
+                                    }
                                 }})
 
                             ;
-
-
-
+                            intents = 0;
                             AlertDialog dialog = ad.create();
                             dialog.show();
-                        } else if (numInt > num) {
+                        } else if (numInt > num[0]) {
                              text = "El numero es massa gran";
 
                         } else {
