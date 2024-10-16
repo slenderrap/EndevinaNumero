@@ -1,6 +1,9 @@
 package com.oriol.endevinanumero;
 
 import android.os.Bundle;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +23,20 @@ public class MainActivity2 extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        TableLayout tabla = findViewById(R.id.tabla);
+        for (int i =0;i<=3;i++){
+            TableRow fila = new TableRow(this);
+            TextView txt1 = new TextView(this);
+            TextView txt2 = new TextView(this);
+            txt1.setText(String.valueOf(MainActivity.records.get(0).getName()));
+            txt2.setText(String.valueOf(MainActivity.records.get(0).getScore()));
+            fila.addView(txt1);
+            fila.addView(txt2);
+            tabla.addView(fila);
+        }
     }
+
+
+
 }

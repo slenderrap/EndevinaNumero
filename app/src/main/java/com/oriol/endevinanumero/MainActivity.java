@@ -24,7 +24,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+    public static ArrayList<Record>  records;
     private int intents=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
 
         });
-
+        records = new ArrayList<Record>();
         final int[] num = {(int) (Math.random() * 100)};
+        num[0]=3;
         final boolean[] endevinat = {false};
 
             Button button = findViewById(R.id.numAleatori);
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                                         Log.i("Error","NO NOMBRE"+nom);
                                     }else {
                                         Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-                                        intent.putExtra(String.valueOf(nom), new String[]{String.valueOf(intents)});
+                                        records.add(new Record(String.valueOf(nom),intents));
                                         startActivity(intent);
                                     }
                                 }})
