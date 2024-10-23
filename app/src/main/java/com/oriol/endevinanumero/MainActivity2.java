@@ -1,9 +1,12 @@
 package com.oriol.endevinanumero;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -70,6 +73,15 @@ public class MainActivity2 extends AppCompatActivity {
             fila.setGravity(Gravity.CENTER);
             tabla.addView(fila);
         }
+        Button bButton = (Button) findViewById(R.id.bBack);
+        bButton.setOnClickListener(new View.OnClickListener() { // from class: com.oriol.endevinanumero.MainActivity2.1
+            @Override // android.view.View.OnClickListener
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity2.this, (Class<?>) MainActivity.class);
+                MainActivity2.this.startActivity(intent);
+            }
+        });
+
     }
 
 
