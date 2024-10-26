@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -25,10 +26,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
-    public static ArrayList<Record>  records;
-    private int intents=0;
+    public static ArrayList<Record>  records = new ArrayList<>();
+    private int intents;
+    private int score;
+    private int num;
+    private int numInt;
+    private Comparator<Record> comparator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,72 +46,81 @@ public class MainActivity extends AppCompatActivity {
             return insets;
 
         });
-        records = new ArrayList<Record>();
-        final int[] num = {(int) (Math.random() * 100)};
-        num[0]=3;
-        final boolean[] endevinat = {false};
+        num = (int) (Math.random() * 100);
+        comparator = Comparator.comparing(Record::getScore).reversed().thenComparing(Record::getName);
+        Log.i("INFO", "size " + records.size());
+        Button button = findViewById(R.id.numAleatori);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                    intents++;
+                    int duration = Toast.LENGTH_SHORT;
 
-            Button button = findViewById(R.id.numAleatori);
-            int numInt;
+                    CharSequence text = "";
+                    EditText et = findViewById(R.id.textInputEditText);
+                    String numStr = et.getText().toString();
+                    try{
+                        numInt = Integer.parseInt(numStr);}
+                    catch (NumberFormatException e){
+                        text = "Has d'introduir un numero";
+                        Toast.makeText(MainActivity.this,text,duration).show();
+                    }
+                    if (numInt == num) {
+                        et.setText("");
+                        score = intents;
 
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                        intents++;
-                        int duration = Toast.LENGTH_SHORT;
-
-                        CharSequence text = "";
-                        EditText et = findViewById(R.id.textInputEditText);
-                        String numStr = et.getText().toString();
-                        int numInt = Integer.parseInt(numStr);
-                        if (numInt == num[0]) {
-                            et.setText("");
-
-                            endevinat[0] = false;
-                            num[0] = (int)(Math.random()*100);
-                            text = "Has encertat el numero";
-                            final EditText input = new EditText(MainActivity.this);
-                            AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
-                            ad.setMessage(text+" en "+intents+" intents.")
-                            .setTitle(text).setView(input)
+                        score = (int)(numInt * (float)(10/score) * 1000);
+                        num = (int)(Math.random()*100);
+                        text = "Has encertat el numero";
+                        final EditText input = new EditText(MainActivity.this);
+                        AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
+                        try {
+                            ad.setMessage(text + " en " + intents + " intents.")
+                                    .setTitle(text).setView(input)
                                     .setNegativeButton("Return", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             dialogInterface.dismiss();
                                         }
                                     })
-                                    .setPositiveButton("Add surname", new DialogInterface.OnClickListener(){
+                                    .setPositiveButton("Add surname", new DialogInterface.OnClickListener() {
 
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Editable nom = input.getText();
-                                    if (nom.equals("")){
-                                        Toast.makeText(MainActivity.this,"Has d'introudir el teu nom",duration).show();
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Editable nom = input.getText();
+                                            if (nom.isEmpty()) {
+                                                Toast.makeText(MainActivity.this, "Has d'introudir el teu nom", duration).show();
 
-                                        Log.i("Error","NO NOMBRE"+nom);
-                                    }else {
-                                        Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-                                        records.add(new Record(String.valueOf(nom),intents));
-                                        startActivity(intent);
-                                    }
-                                }})
+                                                Log.i("Error", "NO NOMBRE" + nom);
+                                            } else {
+                                                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                                                records.add(new Record(String.valueOf(nom), score));
+                                                if (records.size() > 1) {
+                                                    records.sort(comparator);
+                                                }
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    })
 
                             ;
-                            intents = 0;
-                            AlertDialog dialog = ad.create();
-                            dialog.show();
-                        } else if (numInt > num[0]) {
-                             text = "El numero es massa gran";
-
-                        } else {
-                             text = "El numero es molt petit";
+                        }catch (Exception e){
+                            e.getCause();
                         }
-                        System.out.println(text);
+                        intents = 0;
+                        AlertDialog dialog = ad.create();
+                        dialog.show();
+                    } else if (numInt > num) {
+                         text = "El numero es massa gran";
 
-                        Toast toast = Toast.makeText(MainActivity.this, text, duration);
-                        toast.show();
-
+                    } else {
+                         text = "El numero es molt petit";
                     }
-                });
+
+                    Toast toast = Toast.makeText(MainActivity.this, text, duration);
+                    toast.show();
+
+                }
+            });
 
 
         }

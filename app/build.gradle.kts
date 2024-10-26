@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.oriol.endevinanumero"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.oriol.endevinanumero"

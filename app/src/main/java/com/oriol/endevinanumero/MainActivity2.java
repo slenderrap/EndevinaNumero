@@ -1,9 +1,14 @@
 package com.oriol.endevinanumero;
 
+import static com.oriol.endevinanumero.MainActivity.records;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -44,15 +49,15 @@ public class MainActivity2 extends AppCompatActivity {
         fila.addView(txt2);
         fila.setGravity(Gravity.CENTER);
         tabla.addView(fila);
-        for (int i =0;i<MainActivity.records.size();i++){
+        for (int i = 0; i< records.size(); i++){
             fila = new TableRow(this);
             txt1 = new TextView(this);
             txt2 = new TextView(this);
             txt1.setBackgroundColor(Color.rgb(245,245,220));
             txt2.setBackgroundColor(Color.rgb(245,245,220));
 
-            txt2.setText(String.valueOf(MainActivity.records.get(i).getScore()));
-            txt1.setText(String.valueOf(MainActivity.records.get(i).getName()));
+            txt2.setText(String.valueOf(records.get(i).getScore()));
+            txt1.setText(String.valueOf(records.get(i).getName()));
 
             txt1.setPadding(10,10,10,10);
             txt1.setTextColor(Color.BLACK);
@@ -61,8 +66,15 @@ public class MainActivity2 extends AppCompatActivity {
             txt2.setPadding(10,10,10,10);
             txt2.setTextColor(Color.BLACK);
             txt2.setGravity(Gravity.CENTER);
+            Button bButton = findViewById(R.id.bBack);
+            bButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity2.this,MainActivity.class);
 
-
+                    startActivity(intent);
+                }
+            });
 
 
             fila.addView(txt1);
