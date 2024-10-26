@@ -9,8 +9,8 @@
 
     <TableLayout
         android:id="@+id/tabla"
-        android:layout_width="402dp"
-        android:layout_height="537dp"
+        android:layout_width="417dp"
+        android:layout_height="520dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

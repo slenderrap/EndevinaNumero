@@ -18,7 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -66,15 +67,6 @@ public class MainActivity2 extends AppCompatActivity {
             txt2.setPadding(10,10,10,10);
             txt2.setTextColor(Color.BLACK);
             txt2.setGravity(Gravity.CENTER);
-            Button bButton = findViewById(R.id.bBack);
-            bButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity2.this,MainActivity.class);
-
-                    startActivity(intent);
-                }
-            });
 
 
             fila.addView(txt1);
@@ -82,6 +74,15 @@ public class MainActivity2 extends AppCompatActivity {
             fila.setGravity(Gravity.CENTER);
             tabla.addView(fila);
         }
+        Button bButton = (Button) findViewById(R.id.bBack);
+        bButton.setOnClickListener(new View.OnClickListener() { // from class: com.oriol.endevinanumero.MainActivity2.1
+            @Override // android.view.View.OnClickListener
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity2.this, (Class<?>) MainActivity.class);
+                MainActivity2.this.startActivity(intent);
+            }
+        });
+
     }
 
 
